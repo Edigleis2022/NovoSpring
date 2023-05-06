@@ -20,7 +20,9 @@ public interface ProfessorMapper {
     
     public ProfessorDto toDto(Professor entity);
     
-    public Professor toEntity(ProfessorDto dto);
+    public Professor toEntity(ProfessorForm dto);
     
     public List<ProfessorDto> map(List<Professor> items);
+
+    public void update(ProfessorForm dto, Professor entity);
 }

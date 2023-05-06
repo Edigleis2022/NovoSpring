@@ -29,13 +29,23 @@ public class ProfessorService {
     }
     
     public Professor atualizar(long id,ProfessorForm dto) {
-        Optional<Professor> optional = repository.findById(id);
-        if (optional.isEmput()) {
-            String msg = "Não existe Professor para o código [%d] informado";
-            throw new ProfessorNotFoundException(string.format(msg, id)
-        }
+        
         Professor entity = optional.get();
         ProfessorMapper.INSTANCE.update(dto, entity);
         return entity;
+    }
+    
+    public Professor buscarPorId(Long id) throws ProfessorNotFoundException{
+        Optional<Professor> optional = repository.findById(id);
+        if (optional.isEmpty()) {
+            String msg = "Não existe Professor para o código [%d] informado";
+            throw new ProfessorNotFoundException(String.format(msg, id));
+        }
+        return optional.get();
+    }
+    
+    public void excluir(Long id){
+        Professor entity = buscarPorId(id);
+        repository.delete(entity);
     }
 }
